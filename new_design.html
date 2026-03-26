@@ -5,14 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Countdown</title>
 
-  <!-- Apple-like UI -->
   <style>
     * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
       height: 100%;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Arial, sans-serif;
       background: transparent;
     }
 
@@ -29,13 +28,10 @@
       padding: 28px;
       border-radius: 28px;
       backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      box-shadow:
-        0 20px 60px rgba(0,0,0,0.35),
-        inset 0 1px 0 rgba(255,255,255,0.25);
-      color: white;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      color: #111;
     }
 
     .title {
@@ -62,23 +58,21 @@
       border-radius: 20px;
       padding: 18px 10px;
       text-align: center;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.25);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.3),
-        0 8px 20px rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.04);
+      border: 1px solid rgba(0,0,0,0.08);
       transition: all 0.25s ease;
     }
 
     .item:hover {
       transform: translateY(-2px);
-      background: rgba(255,255,255,0.18);
+      background: rgba(0,0,0,0.06);
     }
 
     .num {
       font-size: 42px;
       font-weight: 700;
       letter-spacing: -0.02em;
+      color: #000;
     }
 
     .label {
