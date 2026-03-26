@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D&D 5e — Полный Справочник</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0a07;
+    --bg2: #13100c;
+    --bg3: #1a1510;
+    --parchment: #f5e6c8;
+    --parchment-dim: #c9b48a;
+    --gold: #c9903a;
+    --gold-light: #e8b860;
+    --gold-pale: #f0d080;
+    --red: #8b1a1a;
+    --red-light: #c0392b;
+    --blue: #1a3a5c;
+    --blue-light: #2980b9;
+    --green: #1a3a1a;
+    --green-light: #27ae60;
+    --purple: #3a1a5c;
+    --purple-light: #8e44ad;
+    --border: #3a2a15;
+    --shadow: rgba(0,0,0,0.7);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--parchment);
+    font-family: 'Crimson Text', serif;
+    font-size: 17px;
+    line-height: 1.7;
+    background-image: 
+      radial-gradient(ellipse at 20% 20%, rgba(139,90,26,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(139,26,26,0.05) 0%, transparent 60%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9903a' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* ── NAV ── */
+  #sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 260px;
+    background: var(--bg2);
+    border-right: 2px solid var(--border);
+    overflow-y: auto;
+    z-index: 100;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) var(--bg2);
+  }
+  #sidebar::-webkit-scrollbar { width: 6px; }
+  #sidebar::-webkit-scrollbar-track { background: var(--bg2); }
+  #sidebar::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+  .sidebar-header {
+    padding: 24px 20px 16px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .sidebar-header .dragon {
+    font-size: 2.8rem;
+    display: block;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 0 12px rgba(201,144,58,0.6));
+    animation: glow 3s ease-in-out infinite alternate;
+  }
+  @keyframes glow {
+    from { filter: drop-shadow(0 0 8px rgba(201,144,58,0.4)); }
+    to   { filter: drop-shadow(0 0 20px rgba(201,144,58,0.9)); }
+  }
+  .sidebar-header h1 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.85rem;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    line-height: 1.4;
+  }
+  .sidebar-header p {
+    font-size: 0.75rem;
+    color: var(--parchment-dim);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  .nav-section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    padding: 14px 20px 6px;
+    opacity: 0.7;
+  }
+  .nav-link {
+    display: block;
+    padding: 7px 20px 7px 28px;
+    color: var(--parchment-dim);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .nav-link::before {
+    content: '◆';
+    position: absolute;
+    left: 14px;
+    font-size: 0.4rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .nav-link:hover, .nav-link.active {
+    color: var(--gold-light);
+    border-left-color: var(--gold);
+    background: rgba(201,144,58,0.06);
+    padding-left: 32px;
+  }
+  .nav-link:hover::before, .nav-link.active::before { opacity: 1; }
+
+  /* ── MAIN ── */
+  #main {
+    margin-left: 260px;
+    padding: 0 0 80px 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, #1a0a05 0%, #0d0a07 40%, #08050a 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 70px 60px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 70% 50%, rgba(139,26,26,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 30% 80%, rgba(201,144,58,0.08) 0%, transparent 50%);
+  }
+  .hero-badge {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    opacity: 0.8;
+  }
+  .hero h1 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 3.5rem;
+    color: var(--gold-pale);
+    line-height: 1.1;
+    text-shadow: 0 0 40px rgba(201,144,58,0.4), 0 4px 20px rgba(0,0,0,0.8);
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .hero h1 span { color: var(--red-light); }
+  .hero-sub {
+    font-family: 'IM Fell English', serif;
+    font-size: 1.15rem;
+    color: var(--parchment-dim);
+    font-style: italic;
+    max-width: 620px;
+    position: relative;
+  }
+  .hero-ornament {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 8rem;
+    opacity: 0.06;
+    color: var(--gold);
+    font-family: 'Cinzel Decorative', serif;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 50px 60px 40px;
+    border-bottom: 1px solid rgba(58,42,21,0.5);
+    scroll-margin-top: 20px;
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .section-icon {
+    width: 52px; height: 52px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    background: rgba(201,144,58,0.08);
+    flex-shrink: 0;
+    box-shadow: 0 0 16px rgba(201,144,58,0.2);
+  }
+  .section h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    color: var(--gold-light);
+    letter-spacing: 1px;
+  }
+  .section h2::after {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 60px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin-top: 6px;
+  }
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    color: var(--gold-pale);
+    margin: 28px 0 12px;
+    letter-spacing: 0.5px;
+  }
+  h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--gold);
+    margin: 18px 0 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  p { margin-bottom: 12px; color: var(--parchment); }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── CARDS ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px 16px;
+    position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--gold));
+    border-radius: 4px 4px 0 0;
+  }
+  .card:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .card-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card p { font-size: 0.88rem; color: var(--parchment-dim); margin: 0; }
+
+  /* ── STATS TABLE ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .stat-box {
+    background: var(--bg2);
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 10px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+  .stat-box:hover { border-color: var(--gold); }
+  .stat-abbr {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .stat-name {
+    font-size: 0.7rem;
+    color: var(--parchment-dim);
+    font-style: italic;
+    display: block;
+    margin-top: 4px;
+  }
+  .stat-die {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.4rem;
+    color: var(--parchment);
+  }
+
+  /* ── TABLE ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.9rem;
+  }
+  thead { background: rgba(201,144,58,0.12); }
+  th {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 2px solid var(--gold);
+    text-transform: uppercase;
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid rgba(58,42,21,0.5);
+    color: var(--parchment-dim);
+  }
+  tr:hover td { background: rgba(201,144,58,0.04); color: var(--parchment); }
+  td:first-child { color: var(--parchment); font-weight: 600; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-left: 4px solid var(--callout-color, var(--gold));
+    background: rgba(201,144,58,0.05);
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.92rem;
+  }
+  .callout.tip { --callout-color: #27ae60; background: rgba(39,174,96,0.05); }
+  .callout.warning { --callout-color: #e67e22; background: rgba(230,126,34,0.05); }
+  .callout.danger { --callout-color: #c0392b; background: rgba(192,57,43,0.05); }
+  .callout-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--callout-color, var(--gold));
+    margin-bottom: 6px;
+  }
+
+  /* ── DICE ── */
+  .dice-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin: 16px 0;
+  }
+  .die {
+    background: var(--bg3);
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 18px;
+    text-align: center;
+    min-width: 70px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .die::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .die:hover {
+    border-color: var(--gold);
+    background: rgba(201,144,58,0.1);
+    transform: translateY(-3px) rotate(-2deg);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  }
+  .die.rolling {
+    animation: dieRoll 0.5s ease-out;
+    border-color: var(--gold-light);
+  }
+  @keyframes dieRoll {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(15deg) scale(1.1); }
+    50% { transform: rotate(-10deg) scale(1.15); }
+    75% { transform: rotate(5deg) scale(1.1); }
+    100% { transform: rotate(0deg) scale(1); }
+  }
+  .die-type {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.1rem;
+    color: var(--gold-pale);
+    display: block;
+  }
+  .die-result {
+    font-size: 1.6rem;
+    font-family: 'Cinzel', serif;
+    color: var(--gold-light);
+    display: block;
+    margin-top: 4px;
+    min-height: 30px;
+  }
+  .die-label { font-size: 0.65rem; color: var(--parchment-dim); }
+  #dice-total {
+    margin-top: 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--gold-pale);
+    padding: 10px 20px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  /* ── SPELLS ── */
+  .spell-levels {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .spell-lvl-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: var(--bg2);
+    color: var(--parchment-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 1px;
+  }
+  .spell-lvl-btn:hover, .spell-lvl-btn.active {
+    border-color: var(--purple-light);
+    color: #c39bd3;
+    background: rgba(142,68,173,0.1);
+  }
+  .spell-entry {
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--purple-light);
+    background: var(--bg2);
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    border-radius: 0 4px 4px 0;
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .spell-entry.visible { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
+  .spell-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: #c39bd3;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .spell-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .spell-tag {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 1px;
+  }
+  .spell-tag.school { background: rgba(142,68,173,0.2); color: #c39bd3; border: 1px solid rgba(142,68,173,0.3); }
+  .spell-tag.casting { background: rgba(201,144,58,0.1); color: var(--gold); border: 1px solid rgba(201,144,58,0.2); }
+  .spell-tag.range { background: rgba(41,128,185,0.1); color: #7fb3d3; border: 1px solid rgba(41,128,185,0.2); }
+  .spell-desc { margin-top: 10px; font-size: 0.9rem; color: var(--parchment-dim); }
+
+  /* ── CONDITIONS ── */
+  .condition-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+  }
+  .condition-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px;
+    border-top: 3px solid var(--red-light);
+  }
+  .condition-name {
+    font-family: 'Cinzel', serif;
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .condition-card ul { padding-left: 16px; }
+  .condition-card li { font-size: 0.85rem; color: var(--parchment-dim); margin-bottom: 4px; }
+
+  /* ── CLASSES ── */
+  .class-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .class-tab {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: var(--bg2);
+    color: var(--parchment-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 1px;
+  }
+  .class-tab:hover, .class-tab.active {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    background: rgba(201,144,58,0.08);
+  }
+  .class-panel { display: none; animation: fadeIn 0.3s ease; }
+  .class-panel.visible { display: block; }
+  .class-header {
+    display: flex; align-items: center; gap: 20px;
+    margin-bottom: 20px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px;
+  }
+  .class-icon-big {
+    font-size: 2.5rem;
+    width: 64px; height: 64px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(201,144,58,0.08);
+    border: 2px solid var(--border);
+    border-radius: 50%;
+  }
+  .class-info h3 { margin: 0 0 4px 0; color: var(--gold-light); }
+  .class-info p { font-size: 0.88rem; color: var(--parchment-dim); margin: 0; }
+  .class-stats {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    margin-top: 12px;
+  }
+  .class-stat-item { font-size: 0.8rem; }
+  .class-stat-item span { color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 1px; display: block; }
+
+  /* ── COMBAT ── */
+  .combat-flow {
+    display: flex;
+    gap: 0;
+    margin: 20px 0;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .combat-step {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+    position: relative;
+  }
+  .combat-step::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: 1.2rem;
+    z-index: 2;
+  }
+  .combat-step:last-child::after { display: none; }
+  .cs-box {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 10px;
+    margin: 0 14px;
+    transition: border-color 0.2s;
+  }
+  .cs-box:hover { border-color: var(--gold); }
+  .cs-num {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.5rem;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .cs-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--parchment-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  /* ── ABILITY CHECK ── */
+  .formula-box {
+    background: var(--bg2);
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    color: var(--gold-pale);
+    letter-spacing: 2px;
+  }
+  .formula-box span { color: var(--parchment-dim); font-size: 0.8rem; display: block; margin-top: 6px; font-family: 'Crimson Text', serif; letter-spacing: 0; }
+
+  /* ── RACES ── */
+  .race-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+  }
+  .race-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px;
+    text-align: center;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .race-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .race-emoji { font-size: 2.2rem; display: block; margin-bottom: 10px; }
+  .race-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+  }
+  .race-bonus { font-size: 0.75rem; color: var(--green-light); margin-bottom: 6px; }
+  .race-trait { font-size: 0.75rem; color: var(--parchment-dim); }
+
+  /* ── SCROLL TOP ── */
+  #scrollTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    z-index: 200;
+    transition: all 0.2s;
+    font-family: serif;
+  }
+  #scrollTop:hover { background: var(--gold-light); transform: translateY(-2px); }
+  #scrollTop.visible { display: flex; }
+
+  /* ── PROFICIENCY TABLE ── */
+  .prof-bonus-row {
+    display: flex; gap: 0; margin: 16px 0; flex-wrap: wrap;
+  }
+  .pb-item {
+    flex: 1; min-width: 80px;
+    text-align: center;
+    padding: 12px 8px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+  .pb-item:hover { background: rgba(201,144,58,0.08); }
+  .pb-level {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+  .pb-value {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.2rem;
+    color: var(--parchment);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    #sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+    #sidebar.open { transform: translateX(0); }
+    #main { margin-left: 0; }
+    .hero { padding: 40px 24px; }
+    .hero h1 { font-size: 2.2rem; }
+    .section { padding: 36px 24px; }
+    .stats-row { grid-template-columns: repeat(3, 1fr); }
+    .hero-ornament { display: none; }
+    #menu-btn { display: flex; }
+  }
+
+  #menu-btn {
+    position: fixed;
+    top: 16px; left: 16px;
+    z-index: 300;
+    display: none;
+    align-items: center; justify-content: center;
+    width: 40px; height: 40px;
+    background: var(--bg2);
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--gold);
+    font-size: 1.2rem;
+  }
+
+  /* small list style */
+  ul.fancy { list-style: none; padding: 0; }
+  ul.fancy li {
+    padding: 5px 0 5px 20px;
+    position: relative;
+    color: var(--parchment-dim);
+    font-size: 0.92rem;
+    border-bottom: 1px solid rgba(58,42,21,0.3);
+  }
+  ul.fancy li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    font-size: 0.5rem;
+    top: 11px;
+    color: var(--gold);
+  }
+  ul.fancy li:last-child { border-bottom: none; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+  .tag-inline {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 1px 7px;
+    border-radius: 2px;
+    background: rgba(201,144,58,0.12);
+    color: var(--gold);
+    border: 1px solid rgba(201,144,58,0.2);
+    font-family: 'Cinzel', serif;
+    letter-spacing: 1px;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+
+<button id="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <span class="dragon">🐉</span>
+    <h1>D&D 5e<br>Справочник</h1>
+    <p>Полное руководство</p>
+  </div>
+
+  <div class="nav-section-title">Основы</div>
+  <a class="nav-link" href="#basics">Основы игры</a>
+  <a class="nav-link" href="#dice">Кубики и броски</a>
+  <a class="nav-link" href="#abilities">Характеристики</a>
+  <a class="nav-link" href="#proficiency">Бонус мастерства</a>
+
+  <div class="nav-section-title">Персонаж</div>
+  <a class="nav-link" href="#races">Расы</a>
+  <a class="nav-link" href="#classes">Классы</a>
+  <a class="nav-link" href="#backgrounds">Предыстории</a>
+  <a class="nav-link" href="#alignment">Мировоззрение</a>
+
+  <div class="nav-section-title">Механика</div>
+  <a class="nav-link" href="#skills">Навыки</a>
+  <a class="nav-link" href="#combat">Боевая система</a>
+  <a class="nav-link" href="#actions">Действия в бою</a>
+  <a class="nav-link" href="#conditions">Состояния</a>
+
+  <div class="nav-section-title">Магия</div>
+  <a class="nav-link" href="#magic">Система магии</a>
+  <a class="nav-link" href="#spells">Заклинания</a>
+
+  <div class="nav-section-title">Дополнительно</div>
+  <a class="nav-link" href="#equipment">Снаряжение</a>
+  <a class="nav-link" href="#rest">Отдых и восстановление</a>
+  <a class="nav-link" href="#exploration">Исследование</a>
+  <a class="nav-link" href="#dm">Советы Мастеру</a>
+</nav>
+
+<main id="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Подземелья и Драконы · 5-я редакция</div>
+  <h1>Полный<br><span>Справочник</span></h1>
+  <p class="hero-sub">Всё необходимое для игры — от первого броска кубика до сложных боевых манёвров и магических ритуалов.</p>
+  <div class="hero-ornament">⚔</div>
+</div>
+
+<!-- BASICS -->
+<section class="section" id="basics">
+  <div class="section-header">
+    <div class="section-icon">📖</div>
+    <h2>Основы игры</h2>
+  </div>
+
+  <p>Dungeons &amp; Dragons — это совместная настольная ролевая игра, в которой один игрок берёт на себя роль <strong>Мастера Подземелий (DM)</strong>, а остальные играют за персонажей-авантюристов. Игра строится на воображении, повествовании и розыгрыше кубиков для разрешения неопределённостей.</p>
+
+  <div class="two-col">
+    <div>
+      <h3>Ключевые принципы</h3>
+      <ul class="fancy">
+        <li>Мастер описывает мир и ситуации</li>
+        <li>Игроки описывают действия своих персонажей</li>
+        <li>Кубики определяют успех неопределённых действий</li>
+        <li>DM интерпретирует результаты броска</li>
+        <li>История развивается совместно</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Три столпа D&D</h3>
+      <div class="card-grid" style="grid-template-columns:1fr">
+        <div class="card" style="--card-accent:#c0392b">
+          <div class="card-title">⚔️ Боёвка</div>
+          <p>Сражения с монстрами, тактическая расстановка, расход ресурсов и выживание.</p>
+        </div>
+        <div class="card" style="--card-accent:#27ae60">
+          <div class="card-title">🗺️ Исследование</div>
+          <p>Путешествия по миру, разведка подземелий, поиск ловушек и сокровищ.</p>
+        </div>
+        <div class="card" style="--card-accent:#2980b9">
+          <div class="card-title">💬 Социум</div>
+          <p>Переговоры с NPC, интриги, убеждение, запугивание и торговля.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-title">✦ Золотое правило</div>
+    Если правила в книге противоречат здравому смыслу или мешают веселью — Мастер всегда вправе принять решение на своё усмотрение. Правила служат игре, а не наоборот.
+  </div>
+</section>
+
+<!-- DICE -->
+<section class="section" id="dice">
+  <div class="section-header">
+    <div class="section-icon">🎲</div>
+    <h2>Кубики и броски</h2>
+  </div>
+
+  <p>В D&D используется набор многогранных кубиков. Нажмите на кубик, чтобы бросить его!</p>
+
+  <div class="dice-row" id="diceRow">
+    <div class="die" onclick="rollDie(this,4)">
+      <span class="die-type">d4</span>
+      <span class="die-result" id="r4">–</span>
+      <span class="die-label">нажми</span>
+    </div>
+    <div class="die" onclick="rollDie(this,6)">
+      <span class="die-type">d6</span>
+      <span class="die-result" id="r6">–</span>
+      <span class="die-label">нажми</span>
+    </div>
+    <div class="die" onclick="rollDie(this,8)">
+      <span class="die-type">d8</span>
+      <span class="die-result" id="r8">–</span>
+      <span class="die-label">нажми</span>
+    </div>
+    <div class="die" onclick="rollDie(this,10)">
+      <span class="die-type">d10</span>
+      <span class="die-result" id="r10">–</span>
+      <span class="die-label">нажми</span>
+    </div>
+    <div class="die" onclick="rollDie(this,12)">
+      <span class="die-type">d12</span>
+      <span class="die-result" id="r12">–</span>
+      <span class="die-label">нажми</span>
+    </div>
+    <div class="die" onclick="rollDie(this,20)">
+      <span class="die-type">d20</span>
+      <span class="die-result" id="r20">–</span>
+      <span class="die-label">нажми</span>
+    </div>
+    <div class="die" onclick="rollDie(this,100)">
+      <span class="die-type">d100</span>
+      <span class="die-result" id="r100">–</span>
+      <span class="die-label">нажми</span>
+    </div>
+  </div>
+  <div id="dice-total"></div>
+
+  <h3>Модификаторы и проверки</h3>
+  <div class="formula-box">
+    d20 + Модификатор ≥ КС
+    <span>Бросок кубика + Модификатор характеристики (+ Бонус мастерства) должен быть ≥ Классу Сложности</span>
+  </div>
+
+  <table>
+    <thead><tr><th>Сложность задачи</th><th>КС (Класс Сложности)</th></tr></thead>
+    <tbody>
+      <tr><td>Тривиальная</td><td>5</td></tr>
+      <tr><td>Лёгкая</td><td>10</td></tr>
+      <tr><td>Средняя</td><td>15</td></tr>
+      <tr><td>Трудная</td><td>20</td></tr>
+      <tr><td>Очень трудная</td><td>25</td></tr>
+      <tr><td>Почти невозможная</td><td>30</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Преимущество и Помеха</h3>
+  <div class="two-col">
+    <div class="callout tip">
+      <div class="callout-title">✦ Преимущество</div>
+      Бросьте d20 дважды и используйте <strong>больший</strong> результат. Возникает при благоприятных условиях, заклинаниях или способностях класса.
+    </div>
+    <div class="callout danger">
+      <div class="callout-title">✦ Помеха</div>
+      Бросьте d20 дважды и используйте <strong>меньший</strong> результат. Возникает при неблагоприятных условиях или применении противником способностей.
+    </div>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-title">⚠ Критическое попадание (d20 = 20)</div>
+    При атаке натуральная 20 — автоматическое попадание! Бросьте кости урона <strong>дважды</strong> и сложите.
+    При натуральной 1 — автоматический промах, независимо от модификаторов.
+  </div>
+</section>
+
+<!-- ABILITIES -->
+<section class="section" id="abilities">
+  <div class="section-header">
+    <div class="section-icon">💪</div>
+    <h2>Характеристики</h2>
+  </div>
+  <p>Каждый персонаж имеет шесть основных характеристик. Значения обычно варьируются от 3 до 20+ (у обычных людей — 8–12).</p>
+
+  <div class="stats-row">
+    <div class="stat-box">
+      <span class="stat-abbr">СИЛ</span>
+      <span class="stat-die">⚔️</span>
+      <span class="stat-name">Сила</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-abbr">ЛОВ</span>
+      <span class="stat-die">🏹</span>
+      <span class="stat-name">Ловкость</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-abbr">ТЕЛ</span>
+      <span class="stat-die">🛡️</span>
+      <span class="stat-name">Телосложение</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-abbr">ИНТ</span>
+      <span class="stat-die">📚</span>
+      <span class="stat-name">Интеллект</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-abbr">МДР</span>
+      <span class="stat-die">👁️</span>
+      <span class="stat-name">Мудрость</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-abbr">ХАР</span>
+      <span class="stat-die">✨</span>
+      <span class="stat-name">Харизма</span>
+    </div>
+  </div>
+
+  <h3>Модификаторы характеристик</h3>
+  <p>Модификатор = <strong>(Значение − 10) / 2</strong> (округление вниз). Именно модификатор добавляется к броскам, а не само значение.</p>
+
+  <table>
+    <thead><tr><th>Значение</th><th>Модификатор</th><th>Описание</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>−5</td><td>Катастрофически слабый</td></tr>
+      <tr><td>2–3</td><td>−4</td><td>Критически низкий</td></tr>
+      <tr><td>4–5</td><td>−3</td><td>Очень слабый</td></tr>
+      <tr><td>6–7</td><td>−2</td><td>Слабый</td></tr>
+      <tr><td>8–9</td><td>−1</td><td>Ниже среднего</td></tr>
+      <tr><td>10–11</td><td>+0</td><td>Средний (обычный человек)</td></tr>
+      <tr><td>12–13</td><td>+1</td><td>Немного выше среднего</td></tr>
+      <tr><td>14–15</td><td>+2</td><td>Хороший</td></tr>
+      <tr><td>16–17</td><td>+3</td><td>Отличный</td></tr>
+      <tr><td>18–19</td><td>+4</td><td>Превосходный</td></tr>
+      <tr><td>20</td><td>+5</td><td>Максимум для смертных</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Что контролирует каждая характеристика</h3>
+  <div class="card-grid">
+    <div class="card" style="--card-accent:#c0392b">
+      <div class="card-title">⚔️ Сила</div>
+      <p>Атаки ближнего боя, урон, проверки Wrestling, прыжки, перенос тяжестей. Спасброски: удары, захваты.</p>
+    </div>
+    <div class="card" style="--card-accent:#27ae60">
+      <div class="card-title">🏹 Ловкость</div>
+      <p>Дальние атаки, КД (без доспехов), Скрытность, Акробатика, Ловкость рук, инициатива.</p>
+    </div>
+    <div class="card" style="--card-accent:#e67e22">
+      <div class="card-title">🛡️ Телосложение</div>
+      <p>Очки здоровья (+модификатор к каждому Хит-Дайсу), концентрация заклинаний, выносливость.</p>
+    </div>
+    <div class="card" style="--card-accent:#2980b9">
+      <div class="card-title">📚 Интеллект</div>
+      <p>Магия волшебника, Природа, История, Тайные знания, Расследование, Медицина.</p>
+    </div>
+    <div class="card" style="--card-accent:#8e44ad">
+      <div class="card-title">👁️ Мудрость</div>
+      <p>Магия жреца/друида, Восприятие, Проницательность, Выживание, Уход за животными.</p>
+    </div>
+    <div class="card" style="--card-accent:#f39c12">
+      <div class="card-title">✨ Харизма</div>
+      <p>Магия барда/чародея/колдуна, Убеждение, Запугивание, Обман, Выступление.</p>
+    </div>
+  </div>
+
+  <h3>Генерация характеристик</h3>
+  <div class="two-col">
+    <div>
+      <h4>Стандартный массив</h4>
+      <p>Распределите значения <strong>15, 14, 13, 12, 10, 8</strong> по характеристикам по своему выбору.</p>
+    </div>
+    <div>
+      <h4>4d6, отбросить наименьший</h4>
+      <p>Бросьте 4d6 шесть раз, каждый раз отбрасывая наименьший кубик. Запишите суммы в характеристики.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROFICIENCY -->
+<section class="section" id="proficiency">
+  <div class="section-header">
+    <div class="section-icon">🎓</div>
+    <h2>Бонус мастерства</h2>
+  </div>
+  <p>Бонус мастерства (БМ) добавляется к броскам, в которых персонаж мастерски владеет навыком, оружием или инструментом. Он растёт с уровнем.</p>
+
+  <div class="prof-bonus-row">
+    <div class="pb-item"><span class="pb-level">Ур. 1–4</span><span class="pb-value">+2</span></div>
+    <div class="pb-item"><span class="pb-level">Ур. 5–8</span><span class="pb-value">+3</span></div>
+    <div class="pb-item"><span class="pb-level">Ур. 9–12</span><span class="pb-value">+4</span></div>
+    <div class="pb-item"><span class="pb-level">Ур. 13–16</span><span class="pb-value">+5</span></div>
+    <div class="pb-item"><span class="pb-level">Ур. 17–20</span><span class="pb-value">+6</span></div>
+  </div>
+
+  <h3>Экспертиза</h3>
+  <p>Некоторые классы (Бард, Плут) дают <strong>Экспертизу</strong> — удвоенный бонус мастерства (+4 → +8) для избранных навыков. Это делает персонажа настоящим экспертом в своей области.</p>
+
+  <h3>Спасброски</h3>
+  <p>Каждый класс владеет двумя спасбросками. При вынужденном спасброске: <strong>d20 + модификатор + БМ (если владеет) ≥ КС</strong></p>
+</section>
+
+<!-- RACES -->
+<section class="section" id="races">
+  <div class="section-header">
+    <div class="section-icon">🧝</div>
+    <h2>Расы</h2>
+  </div>
+  <p>Раса определяет базовые черты персонажа: бонусы к характеристикам, скорость передвижения, особые умения и зрение.</p>
+
+  <div class="race-grid">
+    <div class="race-card">
+      <span class="race-emoji">🧑</span>
+      <div class="race-name">Человек</div>
+      <div class="race-bonus">+1 ко всем характеристикам</div>
+      <div class="race-trait">Скорость 30 фут. Вариант: доп. черта + навык</div>
+    </div>
+    <div class="race-card">
+      <span class="race-emoji">🧝</span>
+      <div class="race-name">Эльф</div>
+      <div class="race-bonus">+2 Ловкость</div>
+      <div class="race-trait">Тёмное зрение, Восприятие, Транс вместо сна</div>
+    </div>
+    <div class="race-card">
+      <span class="race-emoji">⚒️</span>
+      <div class="race-name">Дварф</div>
+      <div class="race-bonus">+2 Телосложение</div>
+      <div class="race-trait">Тёмное зрение, Устойчивость к яду, ХД+2</div>
+    </div>
+    <div class="race-card">
+      <span class="race-emoji">🌿</span>
+      <div class="race-name">Полурослик</div>
+      <div class="race-bonus">+2 Ловкость, +1 Хар</div>
+      <div class="race-trait">Везунчик: перебрасывает 1 на атаке/навыке</div>
+    </div>
+    <div class="race-card">
+      <span class="race-emoji">🌑</span>
+      <div class="race-name">Дроу</div>
+      <div class="race-bonus">+1 Ловкость, +2 Харизма</div>
+      <div class="race-trait">Тёмное зрение 120 фут., врождённые заклинания</div>
+    </div>
+    <div class="race-card">
+      <span class="race-emoji">🔥</span>
+      <div class="race-name">Тифлинг</div>
+      <div class="race-bonus">+1 Интеллект, +2 Харизма</div>
+      <div class="race-trait">Огненное сопротивление, врождённая магия</div>
+    </div>
+    <div class="race-card">
+      <span class="race-emoji">🐉</span>
+      <div class="race-name">Драконорождённый</div>
+      <div class="race-bonus">+2 Сила, +1 Харизма</div>
+      <div class="race-trait">Дыхание, сопротивление по типу дракона</div>
+    </div>
+    <div class="race-card">
+      <span class="race-emoji">🌙</span>
+      <div class="race-name">Полуэльф</div>
+      <div class="race-bonus">+2 Харизма, +1 к двум другим</div>
+      <div class="race-trait">Тёмное зрение, два дополнительных навыка</div>
+    </div>
+    <div class="race-card">
+      <span class="race-emoji">👹</span>
+      <div class="race-name">Полуорк</div>
+      <div class="race-bonus">+2 Сила, +1 Телосложение</div>
+      <div class="race-trait">Безжалостная стойкость (1 раз до 1 ОЗ)</div>
+    </div>
+    <div class="race-card">
+      <span class="race-emoji">🌳</span>
+      <div class="race-name">Лесной гном</div>
+      <div class="race-bonus">+2 Интеллект, +1 Ловкость</div>
+      <div class="race-trait">Иллюзорная хитрость, речь с мелкими зверями</div>
+    </div>
+  </div>
+</section>
+
+<!-- CLASSES -->
+<section class="section" id="classes">
+  <div class="section-header">
+    <div class="section-icon">⚔️</div>
+    <h2>Классы</h2>
+  </div>
+
+  <div class="class-tabs" id="classTabs">
+    <button class="class-tab active" onclick="showClass('barbarian',this)">Варвар</button>
+    <button class="class-tab" onclick="showClass('bard',this)">Бард</button>
+    <button class="class-tab" onclick="showClass('cleric',this)">Жрец</button>
+    <button class="class-tab" onclick="showClass('druid',this)">Друид</button>
+    <button class="class-tab" onclick="showClass('fighter',this)">Воин</button>
+    <button class="class-tab" onclick="showClass('monk',this)">Монах</button>
+    <button class="class-tab" onclick="showClass('paladin',this)">Паладин</button>
+    <button class="class-tab" onclick="showClass('ranger',this)">Следопыт</button>
+    <button class="class-tab" onclick="showClass('rogue',this)">Плут</button>
+    <button class="class-tab" onclick="showClass('sorcerer',this)">Чародей</button>
+    <button class="class-tab" onclick="showClass('warlock',this)">Колдун</button>
+    <button class="class-tab" onclick="showClass('wizard',this)">Волшебник</button>
+  </div>
+
+  <div id="barbarian" class="class-panel visible">
+    <div class="class-header">
+      <div class="class-icon-big">🪓</div>
+      <div class="class-info">
+        <h3>Варвар</h3>
+        <p>Свирепый воин с примитивной магией, черпающий силу из ярости и связи с природой.</p>
+        <div class="class-stats">
+          <div class="class-stat-item"><span>Хит-Дайс</span>d12</div>
+          <div class="class-stat-item"><span>Хар-ка атаки</span>Сила</div>
+          <div class="class-stat-item"><span>Доспехи</span>Лёгкие, средние, щиты</div>
+          <div class="class-stat-item"><span>Спасброски</span>Сила, Телосложение</div>
+        </div>
+      </div>
+    </div>
+    <h4>Ключевые умения</h4>
+    <ul class="fancy">
+      <li><strong>Ярость</strong> — бонусное действие. +2/3/4 к урону, сопротивление к дробящему/колющему/рубящему, не можете колдовать. 2–6 раз/день</li>
+      <li><strong>Безрассудная атака</strong> — атакуете с Преимуществом, но враги атакуют вас с Преимуществом до начала следующего хода</li>
+      <li><strong>Опасное чутьё</strong> — Преимущество к спасброскам Ловкости от видимых угроз</li>
+      <li><strong>Быстрое движение</strong> — с 5 уровня +10 фут. скорости без доспехов</li>
+      <li><strong>Неудержимость</strong> — с 7 уровня нельзя быть Напуганным или Очарованным в Ярости</li>
+      <li><strong>Неостановимый</strong> — с 11 уровня атака в Ярости засчитывается даже при промахе (мин. 1 урона)</li>
+      <li><strong>Несокрушимость</strong> — с 20 уровня Сила и Телосложение = 24</li>
+    </ul>
+    <h4>Архетипы (с 3 уровня)</h4>
+    <p>Тотемный воин, Берсерк, Штормовой глашатай, Зверь, Дикий волшебник и другие.</p>
+  </div>
+
+  <div id="bard" class="class-panel">
+    <div class="class-header">
+      <div class="class-icon-big">🎵</div>
+      <div class="class-info">
+        <h3>Бард</h3>
+        <p>Мастер магии слова и музыки, универсальный поддерживающий кастер и дипломат.</p>
+        <div class="class-stats">
+          <div class="class-stat-item"><span>Хит-Дайс</span>d8</div>
+          <div class="class-stat-item"><span>Хар-ка атаки</span>Харизма</div>
+          <div class="class-stat-item"><span>Доспехи</span>Лёгкие</div>
+          <div class="class-stat-item"><span>Спасброски</span>Ловкость, Харизма</div>
+        </div>
+      </div>
+    </div>
+    <h4>Ключевые умения</h4>
+    <ul class="fancy">
+      <li><strong>Вдохновение барда</strong> — бонусное действие: союзник получает бонусный дайс к атаке/навыку/спасброску (d6→d12). 1 раз в Short Rest</li>
+      <li><strong>Мастер на все руки</strong> — половина БМ к непрофицируемым навыкам</li>
+      <li><strong>Песнь отдыха</strong> — союзники восстанавливают доп. ХД в Short Rest</li>
+      <li><strong>Экспертиза</strong> — удвоенный БМ к двум навыкам на 3 и 10 уровне</li>
+      <li><strong>Волшебные тайны</strong> — с 10 уровня заучивает 2 заклинания из ЛЮБОГО списка</li>
+      <li><strong>Высшее вдохновение</strong> — с 20 уровня минимум 1 Вдохновение после инициативы</li>
+    </ul>
+    <h4>Архетипы (с 3 уровня)</h4>
+    <p>Коллегия красноречия, Знания, Доблести, Теней, Создания, Мечей.</p>
+  </div>
+
+  <div id="cleric" class="class-panel">
+    <div class="class-header">
+      <div class="class-icon-big">✝️</div>
+      <div class="class-info">
+        <h3>Жрец</h3>
+        <p>Канал божественной силы. Лучший целитель и универсальный сакральный маг.</p>
+        <div class="class-stats">
+          <div class="class-stat-item"><span>Хит-Дайс</span>d8</div>
+          <div class="class-stat-item"><span>Хар-ка атаки</span>Мудрость</div>
+          <div class="class-stat-item"><span>Доспехи</span>Все + щиты</div>
+          <div class="class-stat-item"><span>Спасброски</span>Мудрость, Харизма</div>
+        </div>
+      </div>
+    </div>
+    <h4>Ключевые умения</h4>
+    <ul class="fancy">
+      <li><strong>Канал Божественности</strong> — специальный эффект 1–3 раза/отдых (зависит от домена)</li>
+      <li><strong>Отогнать Нежить</strong> — Канал: нежить и исчадия бегут от вас</li>
+      <li><strong>Могущественное колдовство</strong> — с 8 уровня +Мудрость к урону заговоров</li>
+      <li><strong>Заклинания домена</strong> — дополнительные заклинания по теме домена, всегда готовы</li>
+      <li><strong>Божественное вмешательство</strong> — с 10 уровня призываете бога на помощь (10–100% шанс)</li>
+    </ul>
+    <h4>Домены (с 1 уровня)</h4>
+    <p>Жизнь, Свет, Война, Знание, Природа, Буря, Смерть, Обман, Порядок, Мир, Сумерки.</p>
+  </div>
+
+  <div id="druid" class="class-panel">
+    <div class="class-header">
+      <div class="class-icon-big">🌿</div>
+      <div class="class-info">
+        <h3>Друид</h3>
+        <p>Хранитель природы с уникальной способностью превращаться в животных.</p>
+        <div class="class-stats">
+          <div class="class-stat-item"><span>Хит-Дайс</span>d8</div>
+          <div class="class-stat-item"><span>Хар-ка атаки</span>Мудрость</div>
+          <div class="class-stat-item"><span>Доспехи</span>Немеллические</div>
+          <div class="class-stat-item"><span>Спасброски</span>Интеллект, Мудрость</div>
+        </div>
+      </div>
+    </div>
+    <h4>Ключевые умения</h4>
+    <ul class="fancy">
+      <li><strong>Облик зверя</strong> — превращение в животное 2 раза/Short Rest; ОЗ зверя = доп. пул ХД</li>
+      <li><strong>Знание природы</strong> — Восприятие, Природа и выживание</li>
+      <li><strong>Языки зверей</strong> — разговор с животными</li>
+      <li><strong>Бессмертный дух</strong> — с 18 уровня не стареет, устойчив к яду</li>
+      <li><strong>Зверь-заклинатель</strong> — с 18 уровня может колдовать в Облике зверя</li>
+    </ul>
+    <h4>Круги (с 2 уровня)</h4>
+    <p>Луна (боевые формы), Земли (расширенные заклинания), Мечты, Пастыря, Грибов, Звёзд.</p>
+  </div>
+
+  <div id="fighter" class="class-panel">
+    <div class="class-header">
+      <div class="class-icon-big">🛡️</div>
+      <div class="class-info">
+        <h3>Воин</h3>
+        <p>Самый универсальный боец — мастер оружия и доспехов с мощными боевыми приёмами.</p>
+        <div class="class-stats">
+          <div class="class-stat-item"><span>Хит-Дайс</span>d10</div>
+          <div class="class-stat-item"><span>Хар-ка атаки</span>Сила/Ловкость</div>
+          <div class="class-stat-item"><span>Доспехи</span>Все + щиты</div>
+          <div class="class-stat-item"><span>Спасброски</span>Сила, Телосложение</div>
+        </div>
+      </div>
+    </div>
+    <h4>Ключевые умения</h4>
+    <ul class="fancy">
+      <li><strong>Боевой стиль</strong> — выбор: Стрельба +2, Дуэль +2 к урону, Защита, Великое Оружие и др.</li>
+      <li><strong>Второе дыхание</strong> — бонусное действие: восстановить 1d10+уровень ОЗ (1 раз/Short Rest)</li>
+      <li><strong>Всплеск действий</strong> — 1 дополнительное Действие в ход (2 раза/Long Rest)</li>
+      <li><strong>Дополнительная атака</strong> — 2 атаки с 5 ур., 3 с 11 ур., 4 с 20 ур. (уникально!)</li>
+      <li><strong>Несокрушимость</strong> — перебросить провальный спасброск (3 раза к 17 уровню)</li>
+    </ul>
+    <h4>Архетипы (с 3 уровня)</h4>
+    <p>Чемпион, Боевой мастер (Маневры), Рыцарь эльдрича, Самурай, Мистический рыцарь.</p>
+  </div>
+
+  <div id="monk" class="class-panel">
+    <div class="class-header">
+      <div class="class-icon-big">👊</div>
+      <div class="class-info">
+        <h3>Монах</h3>
+        <p>Мастер боевых искусств, управляющий ки — мистической жизненной силой.</p>
+        <div class="class-stats">
+          <div class="class-stat-item"><span>Хит-Дайс</span>d8</div>
+          <div class="class-stat-item"><span>Хар-ка атаки</span>Сила/Ловкость</div>
+          <div class="class-stat-item"><span>Доспехи</span>Нет</div>
+          <div class="class-stat-item"><span>Спасброски</span>Сила, Ловкость</div>
+        </div>
+      </div>
+    </div>
+    <h4>Ключевые умения</h4>
+    <ul class="fancy">
+      <li><strong>Боевые искусства</strong> — безоружный удар как бонусное действие; d4→d10 урон без оружия</li>
+      <li><strong>Ки</strong> — очки = уровень. Восст. в Short Rest. Расход на способности</li>
+      <li><strong>Шквал ударов</strong> — 1 Ки: 2 доп. безоружных удара</li>
+      <li><strong>Уклонение</strong> — 1 Ки: Рывок/Выход из меле/Уклонение как бонусное действие</li>
+      <li><strong>Неармированная защита</strong> — КД = 10 + Ловкость + Мудрость</li>
+      <li><strong>Оглушительный удар</strong> — с 5 ур., 1 Ки: спасбросок или Оглушён до следующего хода монаха</li>
+      <li><strong>Чистота тела</strong> — с 10 ур.: иммунитет к болезням и ядам</li>
+    </ul>
+    <h4>Монашеские традиции (с 3 уровня)</h4>
+    <p>Открытая рука, Тень, Четырёх стихий, Солнечная душа, Стрела рассвета, Пьяный дракон.</p>
+  </div>
+
+  <div id="paladin" class="class-panel">
+    <div class="class-header">
+      <div class="class-icon-big">⚜️</div>
+      <div class="class-info">
+        <h3>Паладин</h3>
+        <p>Святой воин, сочетающий мощь боя с могуществом веры и клятвами.</p>
+        <div class="class-stats">
+          <div class="class-stat-item"><span>Хит-Дайс</span>d10</div>
+          <div class="class-stat-item"><span>Хар-ка атаки</span>Сила/Харизма</div>
+          <div class="class-stat-item"><span>Доспехи</span>Все + щиты</div>
+          <div class="class-stat-item"><span>Спасброски</span>Мудрость, Харизма</div>
+        </div>
+      </div>
+    </div>
+    <h4>Ключевые умения</h4>
+    <ul class="fancy">
+      <li><strong>Божественная кара</strong> — 1 раз в ход доп. урон светом (1d8 × ½ палладин. уровня)</li>
+      <li><strong>Возложение рук</strong> — пул ОЗ = 5 × уровень. Лечение касанием</li>
+      <li><strong>Аура защиты</strong> — с 6 ур.: союзники в 10 фут. + Харизма к спасброскам</li>
+      <li><strong>Аура отваги</strong> — с 10 ур.: союзники не могут быть Напуганы</li>
+      <li><strong>Священное оружие</strong> — 10 мин. + Харизма к атакам, оружие светится</li>
+      <li><strong>Харизматический заклинатель</strong> — Харизма как основная хар-ка для заклинаний</li>
+    </ul>
+    <h4>Священные клятвы (с 3 уровня)</h4>
+    <p>Преданность, Древние, Отмщение, Безмолвие, Слава, Завоевание. Нарушенная клятва → Клятвопреступник.</p>
+  </div>
+
+  <div id="ranger" class="class-panel">
+    <div class="class-header">
+      <div class="class-icon-big">🏹</div>
+      <div class="class-info">
+        <h3>Следопыт</h3>
+        <p>Охотник и разведчик, мастер дикой природы и специализированного боя.</p>
+        <div class="class-stats">
+          <div class="class-stat-item"><span>Хит-Дайс</span>d10</div>
+          <div class="class-stat-item"><span>Хар-ка атаки</span>Ловкость/Мудрость</div>
+          <div class="class-stat-item"><span>Доспехи</span>Лёгкие, средние, щиты</div>
+          <div class="class-stat-item"><span>Спасброски</span>Сила, Ловкость</div>
+        </div>
+      </div>
+    </div>
+    <h4>Ключевые умения</h4>
+    <ul class="fancy">
+      <li><strong>Любимый враг</strong> — +2 к проверкам Выживания/Интеллекта против выбранного типа существ</li>
+      <li><strong>Природный исследователь</strong> — экспертиза в выбранной местности</li>
+      <li><strong>Метка охотника</strong> — бонусное действие: +1d6 к атакам по цели, Преимущество к Восприятию</li>
+      <li><strong>Дополнительная атака</strong> — 2 атаки с 5 уровня</li>
+      <li><strong>Лесная тропа</strong> — с 8 уровня Ловкость не снижает скорость в диких землях</li>
+    </ul>
+    <h4>Архетипы (с 3 уровня)</h4>
+    <p>Охотник, Повелитель зверей, Истребитель монстров, Скользящий по горизонту.</p>
+  </div>
+
+  <div id="rogue" class="class-panel">
+    <div class="class-header">
+      <div class="class-icon-big">🗡️</div>
+      <div class="class-info">
+        <h3>Плут</h3>
+        <p>Мастер скрытности, ловушек и точных ударов в нужный момент.</p>
+        <div class="class-stats">
+          <div class="class-stat-item"><span>Хит-Дайс</span>d8</div>
+          <div class="class-stat-item"><span>Хар-ка атаки</span>Ловкость</div>
+          <div class="class-stat-item"><span>Доспехи</span>Лёгкие</div>
+          <div class="class-stat-item"><span>Спасброски</span>Ловкость, Интеллект</div>
+        </div>
+      </div>
+    </div>
+    <h4>Ключевые умения</h4>
+    <ul class="fancy">
+      <li><strong>Скрытная атака</strong> — доп. урон 1d6–10d6 при Преимуществе или при союзнике рядом с целью</li>
+      <li><strong>Воровской жаргон</strong> — тайный язык воров</li>
+      <li><strong>Хитрое действие</strong> — бонусное действие: Рывок, Выход из меле или Прятаться</li>
+      <li><strong>Неустойчивый рефлекс</strong> — с 5 ур.: половина урона при провале спасброска Ловкости</li>
+      <li><strong>Надёжный талант</strong> — с 11 ур.: при броске профицируемого навыка ниже 10 = 10</li>
+      <li><strong>Ускользание</strong> — с 18 ур.: нет урона при успехе Ловкости</li>
+    </ul>
+    <h4>Архетипы (с 3 уровня)</h4>
+    <p>Вор, Убийца, Плут Арканы, Инквизитор, Мастер разума, Душепожиратель.</p>
+  </div>
+
+  <div id="sorcerer" class="class-panel">
+    <div class="class-header">
+      <div class="class-icon-big">⚡</div>
+      <div class="class-info">
+        <h3>Чародей</h3>
+        <p>Прирождённый маг с врождённой магией в крови. Меняет заклинания с помощью Метамагии.</p>
+        <div class="class-stats">
+          <div class="class-stat-item"><span>Хит-Дайс</span>d6</div>
+          <div class="class-stat-item"><span>Хар-ка атаки</span>Харизма</div>
+          <div class="class-stat-item"><span>Доспехи</span>Нет</div>
+          <div class="class-stat-item"><span>Спасброски</span>Телосложение, Харизма</div>
+        </div>
+      </div>
+    </div>
+    <h4>Ключевые умения</h4>
+    <ul class="fancy">
+      <li><strong>Очки чародейства</strong> — конвертируются в слоты заклинаний и обратно</li>
+      <li><strong>Метамагия</strong> — модифицирует заклинания: Осторожное, Дальнобойное, Усиленное, Быстрое, Тихое, Тонкое, Парное</li>
+      <li><strong>Быстрое заклинание</strong> — заклинание как бонусное действие!</li>
+      <li><strong>Усиленное заклинание</strong> — перебросить до [Хар] костей урона</li>
+      <li><strong>Чародейское восстановление</strong> — с 20 ур.: в начале хода при 0 слотов → 4 очка чародейства</li>
+    </ul>
+    <h4>Источники магии (с 1 уровня)</h4>
+    <p>Дикая магия, Драконья линия, Иллюзии, Тени, Буря, Часы, Аберрантный разум.</p>
+  </div>
+
+  <div id="warlock" class="class-panel">
+    <div class="class-header">
+      <div class="class-icon-big">🌑</div>
+      <div class="class-info">
+        <h3>Колдун</h3>
+        <p>Заключил пакт с могущественным существом. Мало слотов, но восстанавливаются в Short Rest.</p>
+        <div class="class-stats">
+          <div class="class-stat-item"><span>Хит-Дайс</span>d8</div>
+          <div class="class-stat-item"><span>Хар-ка атаки</span>Харизма</div>
+          <div class="class-stat-item"><span>Доспехи</span>Лёгкие</div>
+          <div class="class-stat-item"><span>Спасброски</span>Мудрость, Харизма</div>
+        </div>
+      </div>
+    </div>
+    <h4>Ключевые умения</h4>
+    <ul class="fancy">
+      <li><strong>Мистические воззвания</strong> — пассивные улучшения (например, Дьявольское зрение, вечный Мрак Агатиса)</li>
+      <li><strong>Черты пакта</strong> — Клинок (призванное оружие), Цепь (фамильяр), Гримуар (доп. заклинания)</li>
+      <li><strong>Элдрич взрыв</strong> — канализм: 1d10 + Харизма силовым уроном, дальность 120 фут.</li>
+      <li><strong>Мистические тайны</strong> — с 11 ур.: 2+ заклинания более высоких кругов</li>
+    </ul>
+    <h4>Покровители (с 1 уровня)</h4>
+    <p>Архифея, Великий Древний, Небожитель, Исчадие, Умерший, Гений, Клятвенник.</p>
+  </div>
+
+  <div id="wizard" class="class-panel">
+    <div class="class-header">
+      <div class="class-icon-big">📖</div>
+      <div class="class-info">
+        <h3>Волшебник</h3>
+        <p>Учёный-маг с гримуаром. Наибольший выбор заклинаний в игре.</p>
+        <div class="class-stats">
+          <div class="class-stat-item"><span>Хит-Дайс</span>d6</div>
+          <div class="class-stat-item"><span>Хар-ка атаки</span>Интеллект</div>
+          <div class="class-stat-item"><span>Доспехи</span>Нет</div>
+          <div class="class-stat-item"><span>Спасброски</span>Интеллект, Мудрость</div>
+        </div>
+      </div>
+    </div>
+    <h4>Ключевые умения</h4>
+    <ul class="fancy">
+      <li><strong>Гримуар</strong> — записывает заклинания из свитков и книг других магов</li>
+      <li><strong>Подготовка заклинаний</strong> — подготавливает Интеллект+Уровень заклинаний ежедневно</li>
+      <li><strong>Магическое восстановление</strong> — в Short Rest восстанавливает слоты суммарно ≤ ½ уровня</li>
+      <li><strong>Мастер заклинаний</strong> — с 18 ур.: 2 заклинания 1-го круга можно применять без слота</li>
+      <li><strong>Знаковые заклинания</strong> — с 20 ур.: 2 заклинания 3-го круга без слота</li>
+    </ul>
+    <h4>Магические традиции (с 2 уровня)</h4>
+    <p>Школы: Ограждение, Воплощение, Заклинание, Очарование, Иллюзия, Прорицание, Некромантия, Преобразование, Хронургия, Гравитургия, Войны.</p>
+  </div>
+</section>
+
+<!-- BACKGROUNDS -->
+<section class="section" id="backgrounds">
+  <div class="section-header">
+    <div class="section-icon">📜</div>
+    <h2>Предыстории</h2>
+  </div>
+  <p>Предыстория определяет, кем был персонаж до начала приключений. Даёт 2 навыка, инструменты/языки, стартовое снаряжение и черту характера.</p>
+  <div class="card-grid">
+    <div class="card" style="--card-accent:#c9903a"><div class="card-title">⚔️ Солдат</div><p>Навыки: Атлетика, Запугивание. Инструменты: игровые наборы, наземные транспортные средства.</p></div>
+    <div class="card" style="--card-accent:#27ae60"><div class="card-title">🌿 Отшельник</div><p>Навыки: Медицина, Религия. Инструменты: травничество.</p></div>
+    <div class="card" style="--card-accent:#2980b9"><div class="card-title">📚 Мудрец</div><p>Навыки: Тайные знания, История. Два языка.</p></div>
+    <div class="card" style="--card-accent:#8e44ad"><div class="card-title">🎭 Артист</div><p>Навыки: Акробатика, Выступление. Музыкальный инструмент.</p></div>
+    <div class="card" style="--card-accent:#c0392b"><div class="card-title">⚖️ Благородный</div><p>Навыки: История, Убеждение. Игровой набор, один язык.</p></div>
+    <div class="card" style="--card-accent:#e67e22"><div class="card-title">🗡️ Преступник</div><p>Навыки: Обман, Скрытность. Воровские инструменты.</p></div>
+    <div class="card" style="--card-accent:#16a085"><div class="card-title">⛵ Моряк</div><p>Навыки: Атлетика, Восприятие. Навигационные инструменты.</p></div>
+    <div class="card" style="--card-accent:#795548"><div class="card-title">🌾 Деревенщина</div><p>Навыки: Уход за животными, Природа. Инструменты ремесленника.</p></div>
+    <div class="card" style="--card-accent:#607d8b"><div class="card-title">🏙️ Горожанин</div><p>Навыки: Проницательность, Убеждение. Один язык.</p></div>
+    <div class="card" style="--card-accent:#880e4f"><div class="card-title">🔮 Послушник</div><p>Навыки: Проницательность, Религия. Два языка.</p></div>
+  </div>
+</section>
+
+<!-- ALIGNMENT -->
+<section class="section" id="alignment">
+  <div class="section-header">
+    <div class="section-icon">⚖️</div>
+    <h2>Мировоззрение</h2>
+  </div>
+  <p>Мировоззрение определяет моральную и этическую позицию персонажа по двум осям: Добро–Зло и Законопослушность–Хаотичность.</p>
+  <table>
+    <thead>
+      <tr><th></th><th>Законопослушный</th><th>Нейтральный</th><th>Хаотичный</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Добрый</td><td>Законопослушный Добрый (ЗД) — паладин, защитник</td><td>Нейтральный Добрый (НД) — альтруист</td><td>Хаотичный Добрый (ХД) — бунтарь с сердцем</td></tr>
+      <tr><td>Нейтральный</td><td>Законопослушный Нейтральный (ЗН) — судья, солдат</td><td>Истинный Нейтральный (ИН) — отшельник, природа</td><td>Хаотичный Нейтральный (ХН) — свободный дух</td></tr>
+      <tr><td>Злой</td><td>Законопослушный Злой (ЗЗ) — тиран, договор</td><td>Нейтральный Злой (НЗ) — оппортунист</td><td>Хаотичный Злой (ХЗ) — разрушитель, демон</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <div class="callout-title">✦ Заметка</div>
+    Мировоззрение — ориентир, а не клетка. Персонаж может действовать против своего мировоззрения. При систематических нарушениях (особенно у паладина) Мастер может изменить мировоззрение.
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section" id="skills">
+  <div class="section-header">
+    <div class="section-icon">🎯</div>
+    <h2>Навыки</h2>
+  </div>
+  <p>18 навыков привязаны к характеристикам. При проверке: <strong>d20 + Модификатор хар-ки (+ БМ при мастерстве)</strong></p>
+  <table>
+    <thead><tr><th>Навык</th><th>Хар-ка</th><th>Применение</th></tr></thead>
+    <tbody>
+      <tr><td>Акробатика</td><td>Ловкость</td><td>Баланс, кульбиты, падения</td></tr>
+      <tr><td>Атлетика</td><td>Сила</td><td>Лазанье, плавание, прыжки, борьба</td></tr>
+      <tr><td>Восприятие</td><td>Мудрость</td><td>Заметить скрытое, услышать шорох, найти следы</td></tr>
+      <tr><td>Выживание</td><td>Мудрость</td><td>Охота, ориентирование, следопытство</td></tr>
+      <tr><td>Выступление</td><td>Харизма</td><td>Игра, пение, актёрство</td></tr>
+      <tr><td>Запугивание</td><td>Харизма</td><td>Угрозы, принуждение через страх</td></tr>
+      <tr><td>История</td><td>Интеллект</td><td>Знание прошлого, легенд, войн</td></tr>
+      <tr><td>Ловкость рук</td><td>Ловкость</td><td>Карманные кражи, фокусы, переодевания</td></tr>
+      <tr><td>Магия (Арканы)</td><td>Интеллект</td><td>Знание магии, заклинаний, предметов</td></tr>
+      <tr><td>Медицина</td><td>Мудрость</td><td>Стабилизация, диагностика болезней</td></tr>
+      <tr><td>Обман</td><td>Харизма</td><td>Ложь, маскировка, блеф</td></tr>
+      <tr><td>Природа</td><td>Интеллект</td><td>Знание флоры, фауны, погоды</td></tr>
+      <tr><td>Проницательность</td><td>Мудрость</td><td>Определить мотив, распознать ложь</td></tr>
+      <tr><td>Религия</td><td>Интеллект</td><td>Знание богов, обрядов, символов</td></tr>
+      <tr><td>Скрытность</td><td>Ловкость</td><td>Прятаться, двигаться бесшумно</td></tr>
+      <tr><td>Убеждение</td><td>Харизма</td><td>Дипломатия, переговоры, просьбы</td></tr>
+      <tr><td>Уход за животными</td><td>Мудрость</td><td>Успокоить или приручить животное</td></tr>
+      <tr><td>Расследование</td><td>Интеллект</td><td>Дедукция, поиск улик, логика</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- COMBAT -->
+<section class="section" id="combat">
+  <div class="section-header">
+    <div class="section-icon">⚔️</div>
+    <h2>Боевая система</h2>
+  </div>
+
+  <h3>Порядок боя</h3>
+  <div class="combat-flow">
+    <div class="combat-step">
+      <div class="cs-box"><span class="cs-num">1</span><span class="cs-label">Сюрприз</span></div>
+    </div>
+    <div class="combat-step">
+      <div class="cs-box"><span class="cs-num">2</span><span class="cs-label">Инициатива</span></div>
+    </div>
+    <div class="combat-step">
+      <div class="cs-box"><span class="cs-num">3</span><span class="cs-label">Ход</span></div>
+    </div>
+    <div class="combat-step">
+      <div class="cs-box"><span class="cs-num">4</span><span class="cs-label">Реакция</span></div>
+    </div>
+    <div class="combat-step">
+      <div class="cs-box"><span class="cs-num">5</span><span class="cs-label">Конец раунда</span></div>
+    </div>
+  </div>
+
+  <p><strong>Инициатива:</strong> d20 + модификатор Ловкости. Ходы в порядке убывания. Раунд = ~6 секунд.</p>
+
+  <h3>Атака</h3>
+  <div class="formula-box">
+    d20 + Мод.хар-ки + БМ ≥ КД цели
+    <span>Бросок атаки: кубик + Модификатор (Силы или Ловкости) + Бонус Мастерства при профиценции</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <h4>Броски урона</h4>
+      <ul class="fancy">
+        <li>Кинжал: 1d4 колющий</li>
+        <li>Короткий меч: 1d6 колющий</li>
+        <li>Длинный меч: 1d8 (одной рукой) / 1d10 (двумя)</li>
+        <li>Двуручный меч: 2d6 рубящий</li>
+        <li>Молот войны: 1d8 дробящий</li>
+        <li>Большая секира: 1d12 рубящий</li>
+        <li>Ручной арбалет: 1d6 колющий</li>
+        <li>Тяжёлый арбалет: 1d10 колющий</li>
+        <li>Длинный лук: 1d8 колющий</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Класс Доспеха (КД)</h4>
+      <ul class="fancy">
+        <li>Без доспеха: 10 + мод. Ловкости</li>
+        <li>Кожаный доспех: 11 + мод. Лов.</li>
+        <li>Клёпаная кожа: 12 + мод. Лов.</li>
+        <li>Кольчуга: 14 + мод. Лов. (макс.+2)</li>
+        <li>Кольчатый доспех: 16</li>
+        <li>Полный латный: 18</li>
+        <li>Щит: +2 КД</li>
+        <li>Магическое оружие: +1/+2/+3 к атаке и урону</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Очки Здоровья и Смерть</h3>
+  <div class="callout danger">
+    <div class="callout-title">💀 При 0 ОЗ: Смерть</div>
+    Персонаж падает без сознания. Каждый ход — Спасбросок Смерти (d20): 10+ = успех, ниже = провал. 3 успеха = стабилен, 3 провала = мёртв. Натуральная 20 = восстанавливается с 1 ОЗ. Натуральная 1 = 2 провала.
+  </div>
+
+  <h3>Манёвры и тактика</h3>
+  <table>
+    <thead><tr><th>Манёвр</th><th>Механика</th></tr></thead>
+    <tbody>
+      <tr><td>Захват (Grapple)</td><td>Атака: Атлетика vs Атлетика/Акробатика цели. Цель: скорость 0</td></tr>
+      <tr><td>Толчок</td><td>Атака: Атлетика vs Атлетика/Акробатика. Цель падает или отлетает на 5 фут.</td></tr>
+      <tr><td>Отступление</td><td>Действие: движение не вызывает реакции у врагов</td></tr>
+      <tr><td>Уклонение</td><td>Действие: атаки против вас с Помехой; спасброски Ловкости с Преимуществом</td></tr>
+      <tr><td>Помощь</td><td>Действие: союзник атакует с Преимуществом против вашей цели</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ACTIONS -->
+<section class="section" id="actions">
+  <div class="section-header">
+    <div class="section-icon">⚡</div>
+    <h2>Действия в бою</h2>
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Действие (Action)</h3>
+      <ul class="fancy">
+        <li><strong>Атака</strong> — одна или несколько атак</li>
+        <li><strong>Колдовство</strong> — заклинание (если не бонусное)</li>
+        <li><strong>Рывок</strong> — двойная скорость движения</li>
+        <li><strong>Уклонение</strong> — защитная стойка</li>
+        <li><strong>Помощь</strong> — дать Преимущество союзнику</li>
+        <li><strong>Скрытность</strong> — проверка Скрытности</li>
+        <li><strong>Готовность</strong> — отложить реакцию на триггер</li>
+        <li><strong>Поиск</strong> — проверка Восприятия или Расследования</li>
+        <li><strong>Использование предмета</strong></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Бонусное действие</h3>
+      <ul class="fancy">
+        <li>Только если способность это позволяет</li>
+        <li>Атака второй рукой (Two-Weapon Fighting)</li>
+        <li>Ярость Варвара</li>
+        <li>Хитрое действие Плута</li>
+        <li>Быстрое заклинание Чародея</li>
+      </ul>
+      <h3>Реакция (1 раз/раунд)</h3>
+      <ul class="fancy">
+        <li><strong>Атака возможности</strong> — враг выходит из ближнего боя без Отступления</li>
+        <li><strong>Готовое действие</strong> — сработал триггер</li>
+        <li>Некоторые заклинания (Щит и др.)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout tip">
+    <div class="callout-title">✦ Движение</div>
+    В свой ход можно разделить движение (обычно 30 фут.) до, между и после действий. Труднопроходимая местность стоит 2 фута за каждый фут движения.
+  </div>
+</section>
+
+<!-- CONDITIONS -->
+<section class="section" id="conditions">
+  <div class="section-header">
+    <div class="section-icon">🔴</div>
+    <h2>Состояния</h2>
+  </div>
+  <p>Состояния накладываются заклинаниями, монстрами или ловушками и влияют на бой.</p>
+  <div class="condition-grid">
+    <div class="condition-card">
+      <div class="condition-name">😵 Оглушён</div>
+      <ul><li>Не может двигаться</li><li>Не может говорить</li><li>Провал спасбросков СИЛ и ЛОВ</li><li>Атаки по нему с Преимуществом</li></ul>
+    </div>
+    <div class="condition-card">
+      <div class="condition-name">😴 Без сознания</div>
+      <ul><li>Все минусы Оглушённого</li><li>Атаки с Преимуществом</li><li>Удар в упор = критическое попадание</li></ul>
+    </div>
+    <div class="condition-card">
+      <div class="condition-name">😱 Напуган</div>
+      <ul><li>Помеха к атакам и проверкам пока источник страха виден</li><li>Не может добровольно двигаться к нему</li></ul>
+    </div>
+    <div class="condition-card">
+      <div class="condition-name">💫 Очарован</div>
+      <ul><li>Не может атаковать очаровавшего</li><li>Тот имеет Преимущество к Харизме против цели</li></ul>
+    </div>
+    <div class="condition-card">
+      <div class="condition-name">🔒 Схвачен</div>
+      <ul><li>Скорость = 0</li><li>Бонусы к скорости не работают</li><li>Снимается при выходе из досягаемости</li></ul>
+    </div>
+    <div class="condition-card">
+      <div class="condition-name">🪨 Обездвижен</div>
+      <ul><li>Скорость = 0</li><li>Атаки против: Преимущество</li><li>Спасброски ЛОВ: Помеха</li></ul>
+    </div>
+    <div class="condition-card">
+      <div class="condition-name">🙈 Ослеплён</div>
+      <ul><li>Атаки с Помехой</li><li>Атаки по нему с Преимуществом</li><li>Автопровал проверок зрения</li></ul>
+    </div>
+    <div class="condition-card">
+      <div class="condition-name">🔇 Оглохший</div>
+      <ul><li>Провал проверок слуха</li><li>Не слышит звуки</li></ul>
+    </div>
+    <div class="condition-card">
+      <div class="condition-name">🤢 Отравлен</div>
+      <ul><li>Помеха к атакам</li><li>Помеха к проверкам характеристик</li></ul>
+    </div>
+    <div class="condition-card">
+      <div class="condition-name">⬇️ Лежачий</div>
+      <ul><li>Атаки ближнего с Преимуществом, дальнего — с Помехой</li><li>Встать = пол скорости движения</li></ul>
+    </div>
+    <div class="condition-card">
+      <div class="condition-name">👻 Невидимый</div>
+      <ul><li>Атакует с Преимуществом</li><li>Атаки против него с Помехой</li><li>Местоположение можно угадать</li></ul>
+    </div>
+    <div class="condition-card">
+      <div class="condition-name">🪄 Зачарован (Petrified)</div>
+      <ul><li>Превращён в камень</li><li>Иммунитет к урону, яду, болезням</li><li>Спасброски СИЛ/ЛОВ провалены</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- MAGIC -->
+<section class="section" id="magic">
+  <div class="section-header">
+    <div class="section-icon">✨</div>
+    <h2>Система магии</h2>
+  </div>
+  <p>Магия в D&D 5e делится на <strong>заговоры</strong> (без слотов) и <strong>заклинания</strong> (тратят слоты).</p>
+
+  <h3>Слоты заклинаний</h3>
+  <p>Каждый кастер имеет пул слотов по уровням (1–9). Использование заклинания тратит слот соответствующего или более высокого уровня. Слоты восстанавливаются в Long Rest (кроме Колдуна — Short Rest).</p>
+
+  <h3>Характеристика заклинания</h3>
+  <div class="formula-box">
+    КС заклинания = 8 + БМ + мод. хар-ки
+    <span>Бросок атаки заклинанием = d20 + БМ + мод. хар-ки</span>
+  </div>
+
+  <table>
+    <thead><tr><th>Класс</th><th>Хар-ка заклинания</th><th>Источник</th></tr></thead>
+    <tbody>
+      <tr><td>Волшебник</td><td>Интеллект</td><td>Гримуар</td></tr>
+      <tr><td>Жрец / Друид</td><td>Мудрость</td><td>Медитация</td></tr>
+      <tr><td>Паладин / Следопыт</td><td>Мудрость/Харизма</td><td>Молитва</td></tr>
+      <tr><td>Бард / Чародей / Колдун</td><td>Харизма</td><td>Врождённая/Пакт</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Концентрация</h3>
+  <div class="callout warning">
+    <div class="callout-title">⚠ Заклинания на Концентрации</div>
+    Нельзя поддерживать два заклинания на концентрации одновременно. При получении урона: Спасбросок Телосложения КС = 10 или ½ урона (что больше). Провал = потеря концентрации.
+  </div>
+
+  <h3>Школы магии</h3>
+  <div class="card-grid">
+    <div class="card" style="--card-accent:#e74c3c"><div class="card-title">🔥 Воплощение</div><p>Огонь, лёд, молния, кислота. Прямой урон.</p></div>
+    <div class="card" style="--card-accent:#8e44ad"><div class="card-title">🌑 Некромантия</div><p>Смерть, нежить, яды, жизненная сила.</p></div>
+    <div class="card" style="--card-accent:#2980b9"><div class="card-title">👁️ Прорицание</div><p>Предвидение, обнаружение, истина.</p></div>
+    <div class="card" style="--card-accent:#27ae60"><div class="card-title">🌿 Ограждение (Abjuration)</div><p>Защита, снятие заклятий, преграды.</p></div>
+    <div class="card" style="--card-accent:#f39c12"><div class="card-title">💛 Очарование</div><p>Контроль разума, сон, дружба.</p></div>
+    <div class="card" style="--card-accent:#1abc9c"><div class="card-title">🪞 Иллюзия</div><p>Обман, невидимость, мираж.</p></div>
+    <div class="card" style="--card-accent:#e67e22"><div class="card-title">🔮 Заклинание (Enchantment)</div><p>Вызов существ, телепортация, телекинез.</p></div>
+    <div class="card" style="--card-accent:#95a5a6"><div class="card-title">⚗️ Преобразование (Transmutation)</div><p>Изменение форм, материалов, скорости.</p></div>
+  </div>
+</section>
+
+<!-- SPELLS -->
+<section class="section" id="spells">
+  <div class="section-header">
+    <div class="section-icon">📿</div>
+    <h2>Заклинания — краткий справочник</h2>
+  </div>
+  <div class="spell-levels" id="spellLevels">
+    <button class="spell-lvl-btn active" onclick="filterSpells('0',this)">Заговоры</button>
+    <button class="spell-lvl-btn" onclick="filterSpells('1',this)">1 уровень</button>
+    <button class="spell-lvl-btn" onclick="filterSpells('2',this)">2 уровень</button>
+    <button class="spell-lvl-btn" onclick="filterSpells('3',this)">3 уровень</button>
+    <button class="spell-lvl-btn" onclick="filterSpells('4',this)">4–9 уровень</button>
+  </div>
+  <div id="spellList"></div>
+</section>
+
+<!-- EQUIPMENT -->
+<section class="section" id="equipment">
+  <div class="section-header">
+    <div class="section-icon">🎒</div>
+    <h2>Снаряжение</h2>
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Валюта</h3>
+      <table>
+        <thead><tr><th>Монета</th><th>В золотых</th></tr></thead>
+        <tbody>
+          <tr><td>Медная (м.м.)</td><td>0.01 зм</td></tr>
+          <tr><td>Серебряная (с.м.)</td><td>0.1 зм</td></tr>
+          <tr><td>Электрумовая (эм.)</td><td>0.5 зм</td></tr>
+          <tr><td>Золотая (зм.)</td><td>1 зм</td></tr>
+          <tr><td>Платиновая (пм.)</td><td>10 зм</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Снаряжение авантюриста</h3>
+      <ul class="fancy">
+        <li>Факел (1 см) — 1 час света, 20/40 фут.</li>
+        <li>Верёвка конопляная (50 фут.) — 1 зм</li>
+        <li>Верёвка шёлковая (50 фут.) — 10 зм</li>
+        <li>Ранец — 2 зм</li>
+        <li>Зелье лечения — 50 зм, восст. 2d4+2 ОЗ</li>
+        <li>Антитоксин — 50 зм, Преим. к яду 1 час</li>
+        <li>Свиток заклинания — от 50 зм</li>
+        <li>Гримуар — 50 зм</li>
+      </ul>
+    </div>
+  </div>
+  <h3>Магические предметы (примеры)</h3>
+  <div class="card-grid">
+    <div class="card" style="--card-accent:#c9903a"><div class="card-title">+1 Оружие</div><p>+1 к атаке и урону. Считается магическим.</p></div>
+    <div class="card" style="--card-accent:#27ae60"><div class="card-title">Зелье лечения</div><p>Восстанавливает 2d4+2 ОЗ. Действие: выпить.</p></div>
+    <div class="card" style="--card-accent:#2980b9"><div class="card-title">Плащ защиты</div><p>+1 КД и +1 к спасброскам. Требует Настройки.</p></div>
+    <div class="card" style="--card-accent:#8e44ad"><div class="card-title">Кольцо прыжка</div><p>1 раз/день: Прыжок без слота заклинания.</p></div>
+    <div class="card" style="--card-accent:#c0392b"><div class="card-title">Пояс великанской силы</div><p>Сила = 21/23/25/27/29 в зависимости от типа.</p></div>
+    <div class="card" style="--card-accent:#795548"><div class="card-title">Перстень бликования</div><p>10% шанс в начале хода телепортироваться.</p></div>
+  </div>
+</section>
+
+<!-- REST -->
+<section class="section" id="rest">
+  <div class="section-header">
+    <div class="section-icon">🌙</div>
+    <h2>Отдых и восстановление</h2>
+  </div>
+  <div class="two-col">
+    <div class="callout tip">
+      <div class="callout-title">☀️ Короткий отдых (Short Rest, ~1 час)</div>
+      <ul style="padding-left:16px; margin-top:8px;">
+        <li>Тратите Хит-Дайсы: бросить и восстановить ОЗ</li>
+        <li>Варвар: восстанавливает Ярость</li>
+        <li>Колдун: все слоты заклинаний</li>
+        <li>Монах: все Ки</li>
+        <li>Боец: Второе дыхание, часть Всплеска</li>
+      </ul>
+    </div>
+    <div class="callout">
+      <div class="callout-title">🌙 Долгий отдых (Long Rest, ~8 часов)</div>
+      <ul style="padding-left:16px; margin-top:8px;">
+        <li>Восстанавливает все ОЗ</li>
+        <li>Восстанавливает половину потраченных Хит-Дайсов</li>
+        <li>Все слоты заклинаний (кроме Колдуна)</li>
+        <li>Большинство ежедневных способностей</li>
+        <li>Нужно спать ≥6 часов из 8</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout warning">
+    <div class="callout-title">⚠ Истощение (Exhaustion)</div>
+    <p>Накапливается при лишении сна, голоде, экстремальных условиях. 6 уровней: 1 — Помеха к проверкам; 2 — половина скорости; 3 — Помеха к атаке и спасброскам; 4 — половина max ОЗ; 5 — скорость 0; 6 — смерть. Снимается по 1 уровню в Long Rest.</p>
+  </div>
+</section>
+
+<!-- EXPLORATION -->
+<section class="section" id="exploration">
+  <div class="section-header">
+    <div class="section-icon">🗺️</div>
+    <h2>Исследование</h2>
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Темп путешествия</h3>
+      <table>
+        <thead><tr><th>Темп</th><th>в день</th><th>Эффект</th></tr></thead>
+        <tbody>
+          <tr><td>Медленный</td><td>18 миль</td><td>Можно использовать Скрытность</td></tr>
+          <tr><td>Нормальный</td><td>24 мили</td><td>—</td></tr>
+          <tr><td>Быстрый</td><td>30 миль</td><td>−5 к Мудрости (Восприятие)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Ловушки</h3>
+      <ul class="fancy">
+        <li>Поиск: Расследование (Инт) или Восприятие (Мдр)</li>
+        <li>Обезвреживание: Воровские инструменты + Ловкость</li>
+        <li>При срабатывании: спасбросок или авто-урон</li>
+        <li>Ямы, дротики, магические сигнализации</li>
+      </ul>
+    </div>
+  </div>
+  <h3>Темнота и видение</h3>
+  <div class="card-grid">
+    <div class="card" style="--card-accent:#1a1a2e"><div class="card-title">🌑 Полная тьма</div><p>Атаки с Помехой. Воспринимается как Слепота.</p></div>
+    <div class="card" style="--card-accent:#2c3e50"><div class="card-title">🌑 Тусклый свет</div><p>−5 к пассивному Восприятию. Плохая видимость.</p></div>
+    <div class="card" style="--card-accent:#c9903a"><div class="card-title">🌟 Тёмное зрение</div><p>Тусклый свет как яркий, тьма как тусклый. Нет различения цветов.</p></div>
+    <div class="card" style="--card-accent:#c0392b"><div class="card-title">👁️ Истинное зрение</div><p>Видит невидимое, иллюзии, ловушки, магию (60–120 фут.).</p></div>
+  </div>
+</section>
+
+<!-- DM TIPS -->
+<section class="section" id="dm">
+  <div class="section-header">
+    <div class="section-icon">👑</div>
+    <h2>Советы Мастеру Подземелий</h2>
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Построение энкаунтеров</h3>
+      <table>
+        <thead><tr><th>Сложность</th><th>Множитель XP</th></tr></thead>
+        <tbody>
+          <tr><td>Тривиальный</td><td>< 25% порога</td></tr>
+          <tr><td>Лёгкий</td><td>25–49%</td></tr>
+          <tr><td>Средний</td><td>50–74%</td></tr>
+          <tr><td>Тяжёлый</td><td>75–99%</td></tr>
+          <tr><td>Смертельный</td><td>≥ 100%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Порог XP на игрока (в день)</h3>
+      <table>
+        <thead><tr><th>Уровень</th><th>Лёгкий</th><th>Средний</th><th>Тяж.</th><th>Смерт.</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>25</td><td>50</td><td>75</td><td>100</td></tr>
+          <tr><td>3</td><td>75</td><td>150</td><td>225</td><td>400</td></tr>
+          <tr><td>5</td><td>250</td><td>500</td><td>750</td><td>1100</td></tr>
+          <tr><td>10</td><td>600</td><td>1200</td><td>1900</td><td>2800</td></tr>
+          <tr><td>15</td><td>1100</td><td>2200</td><td>3400</td><td>5000</td></tr>
+          <tr><td>20</td><td>2000</td><td>3900</td><td>5900</td><td>8800</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <h3>Принцип «Да, и...»</h3>
+  <div class="callout tip">
+    <div class="callout-title">✦ Правило импровизации</div>
+    Когда игрок делает что-то неожиданное — скажите «Да, и...» (получается и требует небольшого условия) или «Да, но...» (получается, но с последствием). Избегайте «Нет» — это убивает творчество.
+  </div>
+
+  <h3>Золотые правила Мастера</h3>
+  <ul class="fancy">
+    <li>Повествование важнее правил — не уткнитесь в книгу на середине сцены</li>
+    <li>Давайте игрокам ощущение опасности — пусть знают, что смерть реальна</li>
+    <li>Награждайте творческое мышление, а не только оптимальные решения</li>
+    <li>Готовьте ситуации и NPC, а не сюжет — игроки всё равно уйдут в сторону</li>
+    <li>Используйте правило трёх: повторите важную зацепку трижды разными способами</li>
+    <li>Пусть у злодеев будут цели, мотивы и день рождения — они живые существа</li>
+    <li>Тайно бросайте кубики иногда — создаёт напряжение, даже если ничего не происходит</li>
+    <li>Сделайте паузу и уточните у игроков, что они хотят от игры</li>
+  </ul>
+
+  <h3>Реакция NPC</h3>
+  <table>
+    <thead><tr><th>d20</th><th>Начальная реакция</th></tr></thead>
+    <tbody>
+      <tr><td>1–4</td><td>Враждебный — атакует или требует убраться</td></tr>
+      <tr><td>5–8</td><td>Недружелюбный — подозрительный, неохотно помогает</td></tr>
+      <tr><td>9–12</td><td>Безразличный — нейтрален</td></tr>
+      <tr><td>13–16</td><td>Дружелюбный — охотно помогает</td></tr>
+      <tr><td>17–20</td><td>Благожелательный — готов рисковать ради группы</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</main>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ── DICE ROLLER ──
+const results = {};
+function rollDie(el, sides) {
+  el.classList.add('rolling');
+  setTimeout(() => el.classList.remove('rolling'), 500);
+  const val = Math.floor(Math.random() * sides) + 1;
+  results[sides] = val;
+  document.getElementById('r' + sides).textContent = val;
+  // update total
+  const sum = Object.values(results).reduce((a,b)=>a+b,0);
+  const detail = Object.entries(results).map(([s,v])=>`d${s}=${v}`).join(' + ');
+  document.getElementById('dice-total').textContent = `Сумма: ${sum}   (${detail})`;
+}
+
+// ── CLASSES ──
+function showClass(id, btn) {
+  document.querySelectorAll('.class-panel').forEach(p => p.classList.remove('visible'));
+  document.querySelectorAll('.class-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('visible');
+  btn.classList.add('active');
+}
+
+// ── SPELLS ──
+const spellData = {
+  '0': [
+    {name:'Огненный снаряд (Fire Bolt)', school:'Воплощение', cast:'1 действие', range:'120 фут.', desc:'1d10 (5 ур. 2d10, 11 ур. 3d10, 17 ур. 4d10) урона огнём. Поджигает предметы.'},
+    {name:'Священное пламя (Sacred Flame)', school:'Воплощение', cast:'1 действие', range:'60 фут.', desc:'Спасбросок Ловкости или 1d8 (до 5d8) урона лучистым. Нет укрытия.'},
+    {name:'Бладжиднинг (Eldritch Blast)', school:'Воплощение', cast:'1 действие', range:'120 фут.', desc:'1–4 луча (по 1d10) силовым уроном. Можно усиливать Воззваниями.'},
+    {name:'Удар грома (Thunderclap)', school:'Воплощение', cast:'1 действие', range:'5 фут.', desc:'Спасбросок Телосложения КС12 или 1d6 урона громом. Слышно за 100 фут.'},
+    {name:'Пляшущие огни (Dancing Lights)', school:'Воплощение', cast:'1 действие', range:'120 фут.', desc:'Создаёт 4 источника тусклого света на 60 фут. Концентрация до 1 мин.'},
+    {name:'Друидический знак (Druidcraft)', school:'Преобразование', cast:'1 действие', range:'30 фут.', desc:'Предсказание погоды, распускание цветка, тихий звук, зажигание свечи.'},
+    {name:'Малая иллюзия (Minor Illusion)', school:'Иллюзия', cast:'1 действие', range:'30 фут.', desc:'Звук или изображение куба 5 фут. на 1 минуту. Расследование КС = БМ+Инт.'},
+    {name:'Мороз (Ray of Frost)', school:'Воплощение', cast:'1 действие', range:'60 фут.', desc:'Бросок атаки: 1d8 холодом и скорость −10 фут. до начала вашего хода.'},
+  ],
+  '1': [
+    {name:'Шар магической стрелы (Magic Missile)', school:'Воплощение', cast:'1 действие', range:'120 фут.', desc:'3 стрелы по 1d4+1 силовым. Всегда попадают. +1 стрела на уровень выше.'},
+    {name:'Горящие руки (Burning Hands)', school:'Воплощение', cast:'1 действие', range:'15 фут.', desc:'Конус: 3d6 огнём (спас. ЛОВ: половина). +1d6 за круг выше.'},
+    {name:'Щит (Shield)', school:'Ограждение', cast:'Реакция', range:'Себя', desc:'+5 КД до начала вашего следующего хода (включая попадание-триггер). Без концентрации.'},
+    {name:'Хиление (Cure Wounds)', school:'Воплощение', cast:'1 действие', range:'Касание', desc:'1d8 + мод. Мудрости ОЗ. +1d8 за круг выше.'},
+    {name:'Охота (Hunter\'s Mark)', school:'Прорицание', cast:'Бонусное действие', range:'90 фут.', desc:'Цель: +1d6 к урону каждую атаку по ней, Преим. к Восприятию против неё. Концентрация, 1 час.'},
+    {name:'Сон (Sleep)', school:'Очарование', cast:'1 действие', range:'90 фут.', desc:'5d8 ОЗ (нач. с наименьшего ОЗ): существа засыпают. +2d8 за круг выше.'},
+    {name:'Обнаружение магии (Detect Magic)', school:'Прорицание', cast:'1 действие (Ритуал)', range:'Себя', desc:'Видит магическую ауру в радиусе 30 фут. и её школу. Концентрация, 10 мин.'},
+    {name:'Проклятие (Hex)', school:'Заклинание', cast:'Бонусное действие', range:'90 фут.', desc:'Цель: +1d6 некротическим за каждую атаку, Помеха к выбранной хар-ке. Конц. 1ч–24ч.'},
+  ],
+  '2': [
+    {name:'Удар молнии (Shatter)', school:'Воплощение', cast:'1 действие', range:'60 фут.', desc:'Сфера 10 фут.: 3d8 грома (спас. ТЕЛ: половина). Неорганические объекты — Помеха. +1d8/круг.'},
+    {name:'Паутина (Web)', school:'Заклинание', cast:'1 действие', range:'60 фут.', desc:'Куб 20 фут. липкой паутины: Обездвижен (спас. ЛОВ). Горит. Концентрация, 1 час.'},
+    {name:'Невидимость (Invisibility)', school:'Иллюзия', cast:'1 действие', range:'Касание', desc:'Невидим пока не атакует/не колдует. +1 цель за круг выше. Концентрация, 1 час.'},
+    {name:'Зеркальный двойник (Mirror Image)', school:'Иллюзия', cast:'1 действие', range:'Себя', desc:'3 иллюзии. Атаки по d20 могут попасть в иллюзию (КД 10+ЛОВ), уничтожая её. Без концентрации.'},
+    {name:'Духовный клинок (Spiritual Weapon)', school:'Воплощение', cast:'Бонусное действие', range:'60 фут.', desc:'Бонусное действие: атака 1d8+Мдр силовым уроном. Без концентрации, 1 мин.'},
+    {name:'Внушение (Suggestion)', school:'Очарование', cast:'1 действие', range:'30 фут.', desc:'Внушает разумному существу выполнить задание (спас. МДР). Концентрация, 8 часов.'},
+  ],
+  '3': [
+    {name:'Огненный шар (Fireball)', school:'Воплощение', cast:'1 действие', range:'150 фут.', desc:'Сфера 20 фут.: 8d6 огнём (спас. ЛОВ: половина). +1d6 за круг выше.'},
+    {name:'Молния (Lightning Bolt)', school:'Воплощение', cast:'1 действие', range:'100 фут.', desc:'Линия 100×5 фут.: 8d6 электричеством (спас. ЛОВ: половина). +1d6/круг.'},
+    {name:'Контрзаклинание (Counterspell)', school:'Ограждение', cast:'Реакция', range:'60 фут.', desc:'Отменяет заклинание 3 круга и ниже. Для высших кругов — спас. Инт КС=10+круг.'},
+    {name:'Полёт (Fly)', school:'Преобразование', cast:'1 действие', range:'Касание', desc:'Скорость полёта 60 фут. на 10 мин. +1 цель за круг выше. Концентрация.'},
+    {name:'Оживление мертвецов (Animate Dead)', school:'Некромантия', cast:'1 минута', range:'10 фут.', desc:'Создаёт Скелета или Зомби из трупа. Контроль до 4 нежити при повышении круга.'},
+    {name:'Разрушительная волна (Call Lightning)', school:'Воплощение', cast:'1 действие', range:'120 фут.', desc:'Облако: 3d10 (или 4d10 в шторм) молнией в 5 фут. зоне. Каждый ход: 1 действие. Конц. 10 мин.'},
+  ],
+  '4': [
+    {name:'Огненный щит (Fire Shield) [4]', school:'Воплощение', cast:'1 действие', range:'Себя', desc:'Тепло/холод щит: иммун. атакующих к типу, +2d8 урона им. 10 минут. Без концентрации.'},
+    {name:'Заклинание полиморфа (Polymorph) [4]', school:'Преобразование', cast:'1 действие', range:'60 фут.', desc:'Цель→ зверь. ОЗ зверя = отдельный пул. Спас. МДР. Концентрация 1 час.'},
+    {name:'Гибель (Blight) [4]', school:'Некромантия', cast:'1 действие', range:'30 фут.', desc:'8d8 некротическим (спас. ТЕЛ: половина). Растения — авто-максимум.'},
+    {name:'Телепатическая связь (Rary\'s Telepathic Bond) [5]', school:'Прорицание (Ритуал)', cast:'1 действие', range:'30 фут.', desc:'До 8 существ телепатически общаются 1 час без ограничений дальности.'},
+    {name:'Конус холода (Cone of Cold) [5]', school:'Воплощение', cast:'1 действие', range:'Себя (60 фут.)', desc:'Конус 60 фут.: 8d8 холодом (спас. ТЕЛ: половина). Тело → ледяная статуя.'},
+    {name:'Массовое исцеление (Mass Cure Wounds) [5]', school:'Воплощение', cast:'1 действие', range:'60 фут.', desc:'6 существ: каждое восстанавливает 3d8 + Мдр ОЗ. +1d8 за круг выше.'},
+    {name:'Дезинтеграция (Disintegrate) [6]', school:'Преобразование', cast:'1 действие', range:'60 фут.', desc:'10d6+40 силовым (спас. ЛОВ: 0). При 0 ОЗ — уничтожен полностью.'},
+    {name:'Слово силы: Убить (Power Word Kill) [9]', school:'Очарование', cast:'1 действие', range:'60 фут.', desc:'Цель с ≤100 ОЗ умирает мгновенно. Без спасброска.'},
+    {name:'Желание (Wish) [9]', school:'Заклинание', cast:'1 действие', range:'Себя', desc:'Величайшее заклинание. Воспроизвести любое ≤8 круга или изменить реальность. Риск: 33% навсегда потерять Желание.'},
+  ]
+};
+
+function filterSpells(level, btn) {
+  document.querySelectorAll('.spell-lvl-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const list = document.getElementById('spellList');
+  list.innerHTML = '';
+  (spellData[level] || []).forEach(s => {
+    const div = document.createElement('div');
+    div.className = 'spell-entry visible';
+    div.innerHTML = `
+      <div class="spell-name">${s.name}</div>
+      <div class="spell-tags">
+        <span class="spell-tag school">${s.school}</span>
+        <span class="spell-tag casting">⏱ ${s.cast}</span>
+        <span class="spell-tag range">🎯 ${s.range}</span>
+      </div>
+      <div class="spell-desc">${s.desc}</div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+// Init spells
+filterSpells('0', document.querySelector('.spell-lvl-btn.active'));
+
+// ── ACTIVE NAV ──
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.nav-link');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 80) current = s.id;
+  });
+  navLinks.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+  });
+  document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400);
+});
+</script>
+</body>
+</html>
