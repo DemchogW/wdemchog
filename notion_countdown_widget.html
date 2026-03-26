@@ -12,7 +12,9 @@
       --muted: rgba(255,255,255,0.72);
       --border: rgba(255,255,255,0.14);
     }
+
     * { box-sizing: border-box; }
+
     html, body {
       margin: 0;
       width: 100%;
@@ -21,12 +23,14 @@
       background: transparent;
       color: var(--text);
     }
+
     body {
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 16px;
     }
+
     .widget {
       width: 100%;
       max-width: 760px;
@@ -36,6 +40,7 @@
       padding: 24px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.25);
     }
+
     .title {
       font-size: 14px;
       letter-spacing: 0.12em;
@@ -43,16 +48,19 @@
       color: var(--muted);
       margin-bottom: 8px;
     }
+
     .date {
       font-size: 28px;
       font-weight: 700;
       margin-bottom: 18px;
     }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
     }
+
     .cell {
       background: var(--card);
       border: 1px solid var(--border);
@@ -64,28 +72,38 @@
       flex-direction: column;
       justify-content: center;
     }
+
     .num {
       font-size: 38px;
       font-weight: 800;
       line-height: 1;
       margin-bottom: 10px;
     }
+
     .label {
       font-size: 13px;
       color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
+
     .footer {
       margin-top: 16px;
       font-size: 12px;
       color: var(--muted);
       text-align: center;
     }
+
     @media (max-width: 640px) {
-      .grid { grid-template-columns: repeat(2, 1fr); }
-      .date { font-size: 22px; }
-      .num { font-size: 32px; }
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .date {
+        font-size: 22px;
+      }
+      .num {
+        font-size: 32px;
+      }
     }
   </style>
 </head>
@@ -93,24 +111,41 @@
   <div class="widget">
     <div class="title">Обратный отсчёт</div>
     <div class="date">До 20 июля 2026</div>
+
     <div class="grid">
-      <div class="cell"><div class="num" id="days">0</div><div class="label">Дней</div></div>
-      <div class="cell"><div class="num" id="hours">0</div><div class="label">Часов</div></div>
-      <div class="cell"><div class="num" id="minutes">0</div><div class="label">Минут</div></div>
-      <div class="cell"><div class="num" id="seconds">0</div><div class="label">Секунд</div></div>
+      <div class="cell">
+        <div class="num" id="days">0</div>
+        <div class="label">Дней</div>
+      </div>
+      <div class="cell">
+        <div class="num" id="hours">0</div>
+        <div class="label">Часов</div>
+      </div>
+      <div class="cell">
+        <div class="num" id="minutes">0</div>
+        <div class="label">Минут</div>
+      </div>
+      <div class="cell">
+        <div class="num" id="seconds">0</div>
+        <div class="label">Секунд</div>
+      </div>
     </div>
-    <div class="footer" id="footer">Часовой пояс: Europe/Amsterdam</div>
+
+    <div class="footer" id="footer">Часовой пояс: Europe/Moscow</div>
   </div>
 
   <script>
-    const target = new Date('2026-07-20T00:00:00+02:00').getTime();
+    const target = new Date('2026-07-20T00:00:00+03:00').getTime();
+
     const elDays = document.getElementById('days');
     const elHours = document.getElementById('hours');
     const elMinutes = document.getElementById('minutes');
     const elSeconds = document.getElementById('seconds');
     const footer = document.getElementById('footer');
 
-    function pad(n) { return String(n).padStart(2, '0'); }
+    function pad(n) {
+      return String(n).padStart(2, '0');
+    }
 
     function updateCountdown() {
       const now = Date.now();
@@ -134,7 +169,8 @@
       elHours.textContent = pad(hours);
       elMinutes.textContent = pad(minutes);
       elSeconds.textContent = pad(seconds);
-      footer.textContent = 'Часовой пояс цели: Europe/Amsterdam';
+
+      footer.textContent = 'Часовой пояс цели: Europe/Moscow';
     }
 
     updateCountdown();
