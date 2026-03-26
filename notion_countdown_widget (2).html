@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Countdown</title>
+
+  <!-- Apple-like UI -->
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Arial, sans-serif;
+      background: transparent;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 720px;
+      padding: 28px;
+      border-radius: 28px;
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.25);
+      color: white;
+    }
+
+    .title {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 6px;
+    }
+
+    .date {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .item {
+      border-radius: 20px;
+      padding: 18px 10px;
+      text-align: center;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.3),
+        0 8px 20px rgba(0,0,0,0.2);
+      transition: all 0.25s ease;
+    }
+
+    .item:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.18);
+    }
+
+    .num {
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .label {
+      margin-top: 6px;
+      font-size: 12px;
+      opacity: 0.6;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .footer {
+      margin-top: 18px;
+      font-size: 12px;
+      opacity: 0.5;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .num { font-size: 34px; }
+      .date { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="title">Countdown</div>
+    <div class="date">20 July 2026</div>
+
+    <div class="grid">
+      <div class="item">
+        <div class="num" id="days">0</div>
+        <div class="label">Days</div>
+      </div>
+      <div class="item">
+        <div class="num" id="hours">0</div>
+        <div class="label">Hours</div>
+      </div>
+      <div class="item">
+        <div class="num" id="minutes">0</div>
+        <div class="label">Minutes</div>
+      </div>
+      <div class="item">
+        <div class="num" id="seconds">0</div>
+        <div class="label">Seconds</div>
+      </div>
+    </div>
+
+    <div class="footer">Timezone: Moscow (UTC+3)</div>
+  </div>
+
+  <script>
+    const target = new Date('2026-07-20T00:00:00+03:00').getTime();
+
+    const d = document.getElementById('days');
+    const h = document.getElementById('hours');
+    const m = document.getElementById('minutes');
+    const s = document.getElementById('seconds');
+
+    function pad(x){ return String(x).padStart(2,'0'); }
+
+    function update(){
+      const now = Date.now();
+      const diff = target - now;
+
+      if(diff <= 0){
+        d.textContent = '0';
+        h.textContent = '00';
+        m.textContent = '00';
+        s.textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor((diff/(1000*60*60)) % 24);
+      const minutes = Math.floor((diff/(1000*60)) % 60);
+      const seconds = Math.floor((diff/1000) % 60);
+
+      d.textContent = days;
+      h.textContent = pad(hours);
+      m.textContent = pad(minutes);
+      s.textContent = pad(seconds);
+    }
+
+    update();
+    setInterval(update,1000);
+  </script>
+
+</body>
+</html>
